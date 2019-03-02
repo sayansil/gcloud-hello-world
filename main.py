@@ -6,3 +6,9 @@ class MainPage(webapp2.RequestHandler):
         self.response.write('Hello World! This is Sayan.')
 
 app = webapp2.WSGIApplication([('/', MainPage)])
+
+def main():
+    app.run()
+
+if __name__ == "__main__":
+    main()
