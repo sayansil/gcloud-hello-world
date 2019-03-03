@@ -1,14 +1,14 @@
-import webapp2
+from flask import Flask, render_template, request
 
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Hello World! This is Sayan.')
+app = Flask(__name__)
 
-app = webapp2.WSGIApplication([('/', MainPage)])
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
-def main():
-    app.run()
-
-if __name__ == "__main__":
-    main()
+@app.route('/submission', methods=['POST'])
+def submission():
+    name = request.form['name']
+    return render_template(
+        'submission.html',
+        name=name)
