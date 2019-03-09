@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, current_app
 from datetime import datetime
-from google.cloud import datastore
+from google.appengine.ext import ndb
 
 app = Flask(__name__)
+
+class Entry(ndb.Model):
+    name = ndb.StringProperty()
+    timestamp = ndb.StringProperty()
 
 @app.route('/')
 def home():
@@ -23,22 +27,15 @@ def submission():
             'timestamp': unicode(datetime.utcnow())
         }
     push(data)
-
     return render_template('home.html')
 
 def push(data):
-    ds = datastore.Client('s4d-test')
-    key = ds.key('Text')
-
-    entity = datastore.Entity(key=key)
-    entity.update(data)
-    ds.put(entity)
+    newEntry = Entry()
+    newEntry.name = data['name']
+    newEntry.timestamp = data['timestamp']
+    newEntry.put()
 
 def pull():
-    ds = datastore.Client('s4d-test')
-    query = ds.query(kind='Text', order=['-timestamp'])
-
-    query_iterator = query.fetch()
-    entities = list(query_iterator)
-
-    return entities
+    entries = Entry.query().order(-Entry.timestamp).fetch()
+    print entries
+    return entries
