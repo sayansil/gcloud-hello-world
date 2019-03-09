@@ -16,5 +16,5 @@ def already_exists(text):
     return Entry.query(Entry.text == text).fetch(1)
 
 def get_matching_entries(search_text):
-    entries = Entry.query(Entry.text==search_text).order(-Entry.timestamp).fetch()
+    entries = Entry.query(Entry.text==search_text).order().fetch()
     return entries
