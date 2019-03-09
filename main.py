@@ -29,6 +29,15 @@ def submission():
     push(data)
     return render_template('home.html')
 
+@app.route('/search', methods=['POST'])
+def search():
+    name = request.form['name']
+    entries = pull()
+    entries = [entry for entry in entries if entry.name == name]
+    return render_template(
+        'search_result.html',
+        results=entries)
+
 def push(data):
     newEntry = Entry()
     newEntry.name = data['name']
@@ -37,5 +46,4 @@ def push(data):
 
 def pull():
     entries = Entry.query().order(-Entry.timestamp).fetch()
-    print entries
     return entries

@@ -7,11 +7,22 @@
 
 <body>
     <form method="post" action="/">
-        <label for="name">Enter Name : </label>
+        <label for="name">Enter New Text : </label>
         <input type="text" name="name">
         <br><br>
         <input type="submit" value="Submit">
     </form>
+
+    <br/>
+
+    <form method="post" action="/search">
+        <label for="name">Enter Search term : </label>
+        <input type="text" name="name">
+        <br><br>
+        <input type="submit" value="Search" />
+    </form>
+
+    <br/>
 
     <form action="/all-text">
         <input type="submit" value="All texts" />
