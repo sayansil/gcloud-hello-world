@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, current_app
 from google.appengine.ext import ndb
+import difflib
 
 app = Flask(__name__)
 
@@ -28,7 +29,7 @@ def submission():
 def search():
     text = request.form['text']
     entries = pull()
-    entries = [entry for entry in entries if entry.text == text]
+    entries = best_match(entries, text)
     return render_template(
         'search_result.html',
         results=entries)
@@ -40,3 +41,9 @@ def push(data):
 def pull():
     entries = Entry.query().order(-Entry.timestamp).fetch()
     return entries
+
+def best_match(entries, text):
+    texts = [entry.text for entry in entries]
+    matches = difflib.get_close_matches(text, texts)
+    best_matches = [entry for entry in entries if entry.text in matches]
+    return best_matches
