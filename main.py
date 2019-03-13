@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, current_app
-from models import Entry
+from models.Entry import Entry
 import unit_tests
 
 app = Flask(__name__)
@@ -21,7 +21,11 @@ def all_text():
 @app.route('/', methods=['POST'])
 def submission():
     text = request.form['text']
-    feedback = Entry.add_new_entry(text)
+    if not Entry.already_exists(text):
+        Entry(text=text, tags=text.split()).put()
+        feedback = 'SUCCESS'
+    else:
+        feedback = 'ERROR: Duplicate text entered!!!'
     return render_template('home.html',
         submit_feedback=feedback)
 
