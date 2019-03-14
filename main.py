@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, current_app
 from models.Entry import Entry
-import unit_tests
 
 app = Flask(__name__)
 
@@ -43,37 +42,3 @@ def search():
 def cleared():
     Entry.delete_all()
     return render_template('home.html')
-
-
-######################### UNIT TESTS ########################
-
-@app.route('/unit-tests')
-def unit_test():
-    return render_template(
-        'unit_tests.html')
-
-@app.route('/unit-test1')
-def unit_test1():
-    return render_template(
-            'unit_tests.html',
-            result_1=unit_tests.unit_test1())
-
-@app.route('/unit-test2')
-def unit_test2():
-    return render_template(
-            'unit_tests.html',
-            result_2=unit_tests.unit_test2())
-
-@app.route('/unit-test3')
-def unit_test3():
-    return render_template(
-            'unit_tests.html',
-            result_3=unit_tests.unit_test3())
-
-@app.route('/unit-test4')
-def unit_test4():
-    return render_template(
-            'unit_tests.html',
-            result_4=unit_tests.unit_test4())
-
-#############################################################
