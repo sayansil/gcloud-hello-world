@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Results</title>
+</head>
+
+<body>
+
+{% for result in results %}
+<div class="list">
+    <div class="list-body">
+        <p><b>{{result.text}}</b> : {{result.timestamp}}</p>
+    </div>
+</div>
+{% else %}
+<h3>No match found</h3>
+{% endfor %}
+
+</body>
+
+</html>

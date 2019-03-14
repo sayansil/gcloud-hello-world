@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>All texts</title>
+</head>
+
+<body>
+
+{% for text in texts %}
+<div class="list">
+    <div class="list-body">
+        <p><b>{{text.text}}</b> : {{text.timestamp}}</p>
+    </div>
+</div>
+{% else %}
+<h4>No text found</h4>
+{% endfor %}
+
+</body>
+
+</html>
